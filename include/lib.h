@@ -1,12 +1,18 @@
+#include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include <limits.h>
 #include <string.h>
+#include <time.h>
+#include <dirent.h>
+#include <dlfcn.h>
 
 typedef void (*TriFunction)(int *, int);
 
+typedef struct FileNameNode {
+  char *name;
+  struct FileNameNode *next;
+} file_node;
 /*********************************************
  *            --- UTIL.C ---
  ********************************************/
@@ -30,8 +36,24 @@ void swap(int *a, int *b);
 
 void swap_float(float *a, float *b);
 
+int check_args(char *arg);
+
 void run_test_verbose(int *tab, int taille, TriFunction tri_func);
 
+void run_test(int *tab, int taille, TriFunction tri_func);
+
+
+/*********************************************
+ *            --- FILE_NODE ---
+ ********************************************/
+
+file_node *createFileNameNode(const char *name);
+
+void freeFileNameList(file_node *head);
+
+file_node *ajout_tete(file_node *l, file_node *m);
+
+void affichage_liste(file_node *l);
 /*********************************************
  *            --- Sort Functions ---
  ********************************************/
@@ -40,6 +62,6 @@ void bubble_sort(int *tab, int taille);
 
 void bubble_sort_float(float *tab, int taille);
 
-void bubble_sort_opt(int * tab, int taille);
+void bubble_sort_opt(int *tab, int taille);
 
 void simple_sort(int *tab, int taille);

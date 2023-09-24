@@ -1,4 +1,4 @@
-#include "../include/lib.h"
+#include "../../include/lib.h"
 
 void simple_sort(int * tab, int taille){
   int i, j, min_index;

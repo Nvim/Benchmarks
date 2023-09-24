@@ -8,34 +8,60 @@
 
 CC=gcc
 FLAGS= -O3
+# LINK_FLAGS=-L./lib -lbubble_sort -lsimple_sort -lbubble_sort_opt
 LINK_FLAGS=
 SRC=src
 OBJ=obj
+LIB=lib
 BIN=bin/main
 
 #tous les fichiers .c dans le dossier src:
 SRCS=$(wildcard $(SRC)/*.c)
 
+#tous les fichiers .c dans le dossier src/sort:
+SORT_SRCS=$(wildcard $(SRC)/sort/*.c)
+
 #remplace les occurences d'un src/fichier.c par un obj/fichier.o, pour tous les fichiers du dossier src
 # => Dans le dossier obj, fichiers ayant le même nom que les fichiers du dossier src, mais avec l'extension .o
 OBJS=$(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS)) 
+SORT_OBJS=$(patsubst $(SRC)/sort/%.c, $(OBJ)/%.o, $(SORT_SRCS))
+
+LIBS=$(patsubst $(SRC)/sort/%.c, $(LIB)/lib%.so, $(SORT_SRCS)) 
 
 all: $(BIN) #on veut créer l'éxécutable ./bin/debug/main
+libs: $(LIBS) 
+objs: $(OBJS) $(SORT_OBJS)
 
 # --------------------------------------------- COMMANDS -------------------------------------------
 
-#	~2e COMMANDE: 
+#	~3e COMMANDE: 
 #Création de l'éxécutable BIN à partir de OBJS: fichiers.o de ./obj, ayant les mêmes noms que les fichiers.c de ./src (linking)
 
-$(BIN): $(OBJS) 
+#gcc obj/*.o -o bin/main -(link flags)
+$(BIN): $(OBJS) $(SORT_OBJS) $(LIBS)
 	$(CC) $(OBJ)/*.o -o $@ $(LINK_FLAGS)
 
+#-Wl,-rpath,./lib
+# Création des bibliothèques partagées à partir des fichiers.c du dossier ./src/sort 
+#gcc -shared -O3 -o lib/lib%.so src/sort/%.c
+$(LIB)/lib%.so: $(OBJ)/%.o
+	$(CC) -shared $(FLAGS) -o $@ $< 
 
-#	~1ere COMMANDE: 
+#	~2e COMMANDE: 
 #Création des fichiers objets à partir des fichiers.c du dossier ./src (compiling)
+#gcc -c src/%.c -O3 -o obj/%.o
 $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) -c $< $(FLAGS) -o $@	
+
+# ~1e COMMANDE:
+# Création des fichiers objets à partir des fichiers.c du dossier ./src/sort (compiling)
+#gcc -c src/sort/%.c -O3 -o obj/%.o
+$(OBJ)/%.o: $(SRC)/sort/%.c
+	$(CC) -c $< $(FLAGS) -o $@
+
 
 #	~Nettoyage:
 clean:
 	rm $(OBJ)/*.o
+	rm $(LIB)/*.so
+	rm $(BIN)
