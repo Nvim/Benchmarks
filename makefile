@@ -7,9 +7,8 @@
 # --------------------------------------------- VARIABLES -------------------------------------------
 
 CC=gcc
-FLAGS= -O3
-# LINK_FLAGS=-L./lib -lbubble_sort -lsimple_sort -lbubble_sort_opt
-LINK_FLAGS=
+FLAGS=-O3
+LINK_FLAGS=/home/naim/Code/L3/Sort/lib/*.so
 SRC=src
 OBJ=obj
 LIB=lib
@@ -39,7 +38,7 @@ objs: $(OBJS) $(SORT_OBJS)
 
 #gcc obj/*.o -o bin/main -(link flags)
 $(BIN): $(OBJS) $(SORT_OBJS) $(LIBS)
-	$(CC) $(OBJ)/*.o -o $@ $(LINK_FLAGS)
+	$(CC) $(FLAGS) $(OBJ)/*.o -o $@ $(LINK_FLAGS)
 
 #-Wl,-rpath,./lib
 # Création des bibliothèques partagées à partir des fichiers.c du dossier ./src/sort 
@@ -64,4 +63,4 @@ $(OBJ)/%.o: $(SRC)/sort/%.c
 clean:
 	rm $(OBJ)/*.o
 	rm $(LIB)/*.so
-	rm $(BIN)
+	rm bin/*

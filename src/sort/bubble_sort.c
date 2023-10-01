@@ -6,9 +6,6 @@ void bubble_sort(int * tab, int taille){
     for (j = 0; j < taille - 1; j++) {
       if (tab[j] > tab[j + 1]) {
         swap(&tab[j], &tab[j + 1]);
-        // int temp = tab[j];
-        // tab[j] = tab[j+1];
-        // tab[j+1] = temp;
       }
     }
   }

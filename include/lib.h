@@ -7,12 +7,15 @@
 #include <dirent.h>
 #include <dlfcn.h>
 
+#define TAILLE 15
 typedef void (*TriFunction)(int *, int);
 
-typedef struct FileNameNode {
-  char *name;
-  struct FileNameNode *next;
-} file_node;
+typedef struct tree{
+  int data;
+  struct tree *right;
+  struct tree *left;
+} tree;
+
 /*********************************************
  *            --- UTIL.C ---
  ********************************************/

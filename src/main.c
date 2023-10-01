@@ -9,16 +9,18 @@ int main(int argc, char *argv[])
 
   const char *function_name;
   TriFunction function;
+  char libname[256];
+  void *lib_handle;
+
   if(argc <= 1){
-    printf("\n**ERREUR: Aucune fonction de tri specifiee. **\n");
+    fprintf(stderr, "\n**ERREUR: Aucune fonction de tri specifiee. **\n");
     return EXIT_FAILURE;
   }
 
   function_name = argv[1];
-  char libname[256];
   snprintf(libname, sizeof(libname), "lib/lib%s.so", function_name);
 
-  void *lib_handle = dlopen(libname, RTLD_LAZY);
+  lib_handle = dlopen(libname, RTLD_LAZY);
   if(!lib_handle){
     fprintf(stderr, "\nERREUR: impossible de charger la bibliotheque %s\n", dlerror());
     return EXIT_FAILURE;
@@ -31,15 +33,14 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
 
-  int taille = 10;
 
   srand(time(NULL));
 
-  int * tab = creation_tableau(taille);
-  initialisation_aleatoire(tab, taille, 0, 2000);
+  int * tab = creation_tableau(TAILLE);
+  initialisation_aleatoire(tab, TAILLE, 0, 2000);
 
 
-  run_test_verbose(tab, taille, function);
+  run_test_verbose(tab, TAILLE, function);
 
   free(tab);
   tab = NULL;

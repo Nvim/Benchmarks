@@ -1,0 +1,12 @@
+*** config.json file:
+
+- specifies path to the array OR path to an array folder, where every array file will be tested
+- specifies a path to a .csv file/folder, where the sorted array(s) will be placed
+- specifies wether to run in verbose mode or not 
+- specifies project's path
+
+=> need to parse config.json (with python) to retrieve all the correct options to call the c program with.
+
+  * c program will take all these options as arguments
+  * c program will make all calculations and output in .csv files
+  * python program will read the .csv's and draw plots/print meaningful results to stdout
