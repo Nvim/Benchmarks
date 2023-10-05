@@ -10,6 +10,11 @@
 #define TAILLE 15
 typedef void (*TriFunction)(int *, int);
 
+typedef struct file_node{
+  char * name;
+  struct file_node * next;
+} file_node;
+
 typedef struct tree{
   int data;
   struct tree *right;

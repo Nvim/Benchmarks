@@ -39,6 +39,16 @@ int main(int argc, char *argv[])
   int * tab = creation_tableau(TAILLE);
   initialisation_aleatoire(tab, TAILLE, 0, 2000);
 
+  // int taille = 5;
+  // FILE * f = fopen("arrays/array.csv", "r");
+  // int * tab = malloc(sizeof(int)*taille);
+  // char c = 'a';
+  // char buf[4] = "caca";
+  // while(c != '\0'){
+  //   c = fread(&c, sizeof(c), 1, f);
+  // }
+
+
 
   run_test_verbose(tab, TAILLE, function);
 
