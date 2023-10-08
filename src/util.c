@@ -1,4 +1,5 @@
 #include "../include/lib.h"
+#include <stdio.h>
 #include <string.h>
 
 int is_sorted(int *tab, int taille) {
@@ -56,57 +57,81 @@ void swap_float(float *a, float *b) {
   *b = temp;
 }
 
-// returns an array of all C files containing "sort" substring in their name
-file_node *get_sort_files() {
-  DIR *dir;
-  struct dirent *entry;
-  const char *path = ".";
-  dir = opendir(path);
+// // returns an array of all C files containing "sort" substring in their name
+// file_node *get_sort_files() {
+//   DIR *dir;
+//   struct dirent *entry;
+//   const char *path = ".";
+//   dir = opendir(path);
+//
+//   if (dir == NULL) {
+//     perror("Erreur lors de l'ouverture du dossier");
+//     return NULL;
+//   }
+//
+//   file_node *head = NULL;
+//
+//   // Parcourez les fichiers dans le dossier
+//   while ((entry = readdir(dir)) != NULL) {
+//     // Ignorer les entrées spéciales "." et ".."
+//     if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
+//     {
+//       // Vérifiez si le nom du fichier contient le mot "sort"
+//       if (strstr(entry->d_name, "sort") != NULL) {
+//         file_node *node = createFileNameNode(entry->d_name);
+//         if (node != NULL) {
+//           if (head == NULL) {
+//             head = node;
+//           } else {
+//             head = ajout_tete(head, node);
+//           }
+//         }
+//       }
+//     }
+//   }
+//
+//   // Fermez le dossier
+//   closedir(dir);
+//   return head;
+// }
 
-  if (dir == NULL) {
-    perror("Erreur lors de l'ouverture du dossier");
-    return NULL;
+void read_csv() {
+  FILE *fp = fopen("arrays/array.csv", "r");
+
+  if (fp == NULL) {
+    fprintf(stderr, "*** Erreur lors de l'ouverture du fichier");
+    return;
   }
 
-  file_node *head = NULL;
+  char ligne[1024]; // Stocker la ligne lue depuis le fichier
+  // fgets(ligne, sizeof(ligne), fp);
+  // int array_size = atoi(strtok(ligne, ","));
+  // if (array_size < 1) {
+  //   fprintf(stderr, "*** Erreur: taille du tableau invalide");
+  //   return NULL;
+  // }
+  // int *tab = creation_tableau(array_size);
+  int i = 0;
 
-  // Parcourez les fichiers dans le dossier
-  while ((entry = readdir(dir)) != NULL) {
-    // Ignorer les entrées spéciales "." et ".."
-    if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
-      // Vérifiez si le nom du fichier contient le mot "sort"
-      if (strstr(entry->d_name, "sort") != NULL) {
-        file_node *node = createFileNameNode(entry->d_name);
-        if (node != NULL) {
-          if (head == NULL) {
-            head = node;
-          } else {
-            head = ajout_tete(head, node);
-          }
-        }
-      }
+  while (fgets(ligne, sizeof(ligne), fp)) {
+    // Utiliser strtok pour diviser la ligne en valeurs séparées par des
+    // virgules
+    char *token = strtok(ligne, ",");
+    while (token != NULL) {
+      // Convertir le token en un entier
+      int entier = atoi(token);
+      printf("%d", entier);
+      // tab[i] = atoi(token);
+      // Obtenir le prochain token
+      token = strtok(NULL, ",");
     }
+    printf("\n");
   }
 
-  // Fermez le dossier
-  closedir(dir);
-  return head;
-}
-
-// checks that the function name specified exists in the program
-// returns 1 for yes, 0 for no
-int check_args(char *arg) {
-  file_node *file_list = get_sort_files();
-
-  while (file_list != NULL) {
-    if (strcmp(file_list->name, arg) == 0) {
-      freeFileNameList(file_list);
-      return 1;
-    }
-    file_list = file_list->next;
-  }
-  freeFileNameList(file_list);
-  return 0;
+  // Fermer le fichier
+  fclose(fp);
+  printf("fini");
+  // return tab;
 }
 
 void run_test_verbose(int *tab, int taille, TriFunction tri_func) {

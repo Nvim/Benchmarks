@@ -41,6 +41,8 @@ void swap_float(float *a, float *b);
 
 int check_args(char *arg);
 
+void read_csv();
+
 void run_test_verbose(int *tab, int taille, TriFunction tri_func);
 
 void run_test(int *tab, int taille, TriFunction tri_func);
@@ -50,13 +52,13 @@ void run_test(int *tab, int taille, TriFunction tri_func);
  *            --- FILE_NODE ---
  ********************************************/
 
-file_node *createFileNameNode(const char *name);
-
-void freeFileNameList(file_node *head);
-
-file_node *ajout_tete(file_node *l, file_node *m);
-
-void affichage_liste(file_node *l);
+// file_node *createFileNameNode(const char *name);
+//
+// void freeFileNameList(file_node *head);
+//
+// file_node *ajout_tete(file_node *l, file_node *m);
+//
+// void affichage_liste(file_node *l);
 /*********************************************
  *            --- Sort Functions ---
  ********************************************/

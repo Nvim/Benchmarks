@@ -10,3 +10,12 @@
   * c program will take all these options as arguments
   * c program will make all calculations and output in .csv files
   * python program will read the .csv's and draw plots/print meaningful results to stdout
+
+
+*** Args for c program:
+
+- sorting method
+- array file path
+- verbose mode
+
+-> no need to specify an output file, i can just redirect the program's output.

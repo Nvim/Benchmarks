@@ -12,10 +12,18 @@ int main(int argc, char *argv[])
   char libname[256];
   void *lib_handle;
 
-  if(argc <= 1){
-    fprintf(stderr, "\n**ERREUR: Aucune fonction de tri specifiee. **\n");
+  if(argc <= 2){
+    fprintf(stderr, "\n**Usage: main.c <algorithm> <array_size>**\n");
     return EXIT_FAILURE;
   }
+
+  int array_size;
+  array_size = atoi(argv[2]);
+  printf("\n%d\n", array_size);
+
+  read_csv();
+  // affichage_tableau(tab, sizeof(&tab)/sizeof(int));
+  return 0;
 
   function_name = argv[1];
   snprintf(libname, sizeof(libname), "lib/lib%s.so", function_name);
@@ -36,11 +44,11 @@ int main(int argc, char *argv[])
 
   srand(time(NULL));
 
-  int * tab = creation_tableau(TAILLE);
-  initialisation_aleatoire(tab, TAILLE, 0, 2000);
+  int * tab = creation_tableau(array_size);
+  initialisation_aleatoire(tab, array_size, 0, 2000);
 
 
-  run_test_verbose(tab, TAILLE, function);
+  run_test_verbose(tab, array_size, function);
 
   free(tab);
   tab = NULL;
