@@ -95,22 +95,17 @@ void swap_float(float *a, float *b) {
 //   return head;
 // }
 
-void read_csv() {
+int *read_csv(int array_size) {
   FILE *fp = fopen("arrays/array.csv", "r");
 
   if (fp == NULL) {
     fprintf(stderr, "*** Erreur lors de l'ouverture du fichier");
-    return;
+    return NULL;
   }
 
-  char ligne[1024]; // Stocker la ligne lue depuis le fichier
-  // fgets(ligne, sizeof(ligne), fp);
-  // int array_size = atoi(strtok(ligne, ","));
-  // if (array_size < 1) {
-  //   fprintf(stderr, "*** Erreur: taille du tableau invalide");
-  //   return NULL;
-  // }
-  // int *tab = creation_tableau(array_size);
+  char ligne[MAX_LINE_LENGTH]; // Stocker la ligne lue depuis le fichier
+  int *tab = creation_tableau(array_size);
+
   int i = 0;
 
   while (fgets(ligne, sizeof(ligne), fp)) {
@@ -120,33 +115,32 @@ void read_csv() {
     while (token != NULL) {
       // Convertir le token en un entier
       int entier = atoi(token);
-      printf("%d", entier);
-      // tab[i] = atoi(token);
+      tab[i] = atoi(token);
       // Obtenir le prochain token
       token = strtok(NULL, ",");
+      i++;
     }
-    printf("\n");
   }
 
   // Fermer le fichier
   fclose(fp);
-  printf("fini");
-  // return tab;
+  printf("\nLecture du fichier terminée.\n");
+  return tab;
 }
 
 void run_test_verbose(int *tab, int taille, TriFunction tri_func) {
 
-  printf("- Tableau initial: \n");
+  printf("\t-- Tableau initial --\n");
   affichage_tableau(tab, taille);
-  printf("- Tableau trié? %d\n", is_sorted(tab, taille));
+  printf("-> Tableau trié? %d\n", is_sorted(tab, taille));
 
   clock_t debut = clock();
   tri_func(tab, taille);
   clock_t fin = clock();
 
-  printf("- Tableau trié: \n");
+  printf("\n\t-- Tableau trié: --\n");
   affichage_tableau(tab, taille);
-  printf("- Tableau trié? %d\n", is_sorted(tab, taille));
+  printf("-> Tableau trié? %d\n", is_sorted(tab, taille));
 
   double temps = (double)(fin - debut) / CLOCKS_PER_SEC;
   printf("Temps d'exécution : %f secondes\n", temps);

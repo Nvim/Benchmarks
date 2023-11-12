@@ -13,17 +13,20 @@ int main(int argc, char *argv[])
   void *lib_handle;
 
   if(argc <= 2){
-    fprintf(stderr, "\n**Usage: main.c <algorithm> <array_size>**\n");
+    fprintf(stderr, "\n**Usage: main <algorithm> <array_size>**\n");
     return EXIT_FAILURE;
   }
 
   int array_size;
   array_size = atoi(argv[2]);
-  printf("\n%d\n", array_size);
+  if(array_size < 1){
+    fprintf(stderr, "\nERREUR: Taille de tableau invalide!\n");
+    return EXIT_FAILURE;
+  }
+  printf("\nArray Size: %d\n", array_size);
 
-  read_csv();
-  // affichage_tableau(tab, sizeof(&tab)/sizeof(int));
-  return 0;
+  int * array = read_csv(array_size);
+  printf("\n");
 
   function_name = argv[1];
   snprintf(libname, sizeof(libname), "lib/lib%s.so", function_name);
@@ -44,14 +47,10 @@ int main(int argc, char *argv[])
 
   srand(time(NULL));
 
-  int * tab = creation_tableau(array_size);
-  initialisation_aleatoire(tab, array_size, 0, 2000);
+  run_test_verbose(array, array_size, function);
 
-
-  run_test_verbose(tab, array_size, function);
-
-  free(tab);
-  tab = NULL;
+  free(array);
+  array = NULL;
   dlclose(lib_handle);
 
   return EXIT_SUCCESS;

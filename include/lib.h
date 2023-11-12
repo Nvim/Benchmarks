@@ -8,6 +8,7 @@
 #include <dlfcn.h>
 
 #define TAILLE 15
+#define MAX_LINE_LENGTH 2048
 typedef void (*TriFunction)(int *, int);
 
 // typedef struct file_node{
@@ -46,7 +47,7 @@ void swap_float(float *a, float *b);
 
 int check_args(char *arg);
 
-void read_csv();
+int *read_csv(int array_size);
 
 void run_test_verbose(int *tab, int taille, TriFunction tri_func);
 

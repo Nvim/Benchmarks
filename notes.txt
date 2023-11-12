@@ -19,3 +19,9 @@
 - verbose mode
 
 -> no need to specify an output file, i can just redirect the program's output.
+
+---
+
+* C program trusts array_size that's given as an arg !
+  -> it will be calculated by python program. (simple idea: count ',').
+  -> the values in array.csv are all array values. no size as 1st element.
