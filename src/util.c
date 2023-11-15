@@ -1,4 +1,5 @@
 #include "../include/lib.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -57,43 +58,39 @@ void swap_float(float *a, float *b) {
   *b = temp;
 }
 
-// // returns an array of all C files containing "sort" substring in their name
-// file_node *get_sort_files() {
-//   DIR *dir;
-//   struct dirent *entry;
-//   const char *path = ".";
-//   dir = opendir(path);
-//
-//   if (dir == NULL) {
-//     perror("Erreur lors de l'ouverture du dossier");
-//     return NULL;
-//   }
-//
-//   file_node *head = NULL;
-//
-//   // Parcourez les fichiers dans le dossier
-//   while ((entry = readdir(dir)) != NULL) {
-//     // Ignorer les entrées spéciales "." et ".."
-//     if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
-//     {
-//       // Vérifiez si le nom du fichier contient le mot "sort"
-//       if (strstr(entry->d_name, "sort") != NULL) {
-//         file_node *node = createFileNameNode(entry->d_name);
-//         if (node != NULL) {
-//           if (head == NULL) {
-//             head = node;
-//           } else {
-//             head = ajout_tete(head, node);
-//           }
-//         }
-//       }
-//     }
-//   }
-//
-//   // Fermez le dossier
-//   closedir(dir);
-//   return head;
-// }
+// Fonction pour effectuer un passage dans le sens croissant
+void croissant(int *tab, int taille, uint_fast8_t *swapped) {
+  *swapped = 0; // Initialiser la variable swapped à 0
+
+  for (int i = 0; i < taille - 1; i++) {
+    if (tab[i] > tab[i + 1]) {
+      // Échanger les éléments
+      swap(&tab[i], &tab[i + 1]);
+      *swapped = 1;
+    }
+  }
+}
+
+// Fonction pour effectuer un passage dans le sens décroissant
+void decroissant(int *tab, int taille, uint_fast8_t *swapped) {
+  *swapped = 0; // Initialiser la variable swapped à 0
+
+  for (int i = taille - 1; i > 0; i--) {
+    if (tab[i] > tab[i - 1]) {
+      // Échanger les éléments
+      swap(&tab[i], &tab[i - 1]);
+      *swapped = 1;
+    }
+  }
+}
+
+void random_tab(int size) {
+  FILE * fp = fopen("arrays/array.csv", "w");
+  for (int i = 0; i < size; i++) {
+    fprintf(fp, "%d,", rand() % 400);
+  }
+  fclose(fp);
+}
 
 int *read_csv(int array_size) {
   FILE *fp = fopen("arrays/array.csv", "r");
@@ -128,7 +125,7 @@ int *read_csv(int array_size) {
   return tab;
 }
 
-void run_test_verbose(int *tab, int taille, TriFunction tri_func) {
+void run_test_verbose(int *tab, int taille, SortFunction tri_func) {
 
   printf("\t-- Tableau initial --\n");
   affichage_tableau(tab, taille);
@@ -146,9 +143,9 @@ void run_test_verbose(int *tab, int taille, TriFunction tri_func) {
   printf("Temps d'exécution : %f secondes\n", temps);
 }
 
-void run_test(int *tab, int taille, TriFunction tri_func) {
+void run_test(int *tab, int taille, SortFunction tri_func) {
 
-  printf("- Tableau trié? %d\n", is_sorted(tab, taille));
+  printf("- Tableau trié? %d, (Taille: %d)\n", is_sorted(tab, taille), taille);
 
   clock_t debut = clock();
   tri_func(tab, taille);
@@ -157,5 +154,21 @@ void run_test(int *tab, int taille, TriFunction tri_func) {
   printf("- Tableau trié? %d\n", is_sorted(tab, taille));
 
   double temps = (double)(fin - debut) / CLOCKS_PER_SEC;
+  printf("Temps d'exécution : %f secondes\n", temps);
+}
+
+void run_test_merge(int *tab, int taille, int debut, int fin, MergeFunction tri_func) {
+
+  printf("- Tableau trié? %d, (Taille: %d)\n", is_sorted(tab, taille), taille);
+  affichage_tableau(tab, taille);
+
+  clock_t debut_temps = clock();
+  tri_func(tab, debut, fin);
+  clock_t fin_temps = clock();
+
+  printf("- Tableau trié? %d\n", is_sorted(tab, taille));
+  affichage_tableau(tab, taille);
+
+  double temps = (double)(fin_temps - debut_temps) / CLOCKS_PER_SEC;
   printf("Temps d'exécution : %f secondes\n", temps);
 }

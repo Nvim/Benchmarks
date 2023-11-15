@@ -1,22 +1,24 @@
+#include <dirent.h>
+#include <dlfcn.h>
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <dirent.h>
-#include <dlfcn.h>
+#include <stdint.h>
 
 #define TAILLE 15
-#define MAX_LINE_LENGTH 2048
-typedef void (*TriFunction)(int *, int);
+#define MAX_LINE_LENGTH 32768
+typedef void (*SortFunction)(int *, int);
+typedef void (*MergeFunction)(int *, int, int);
 
 // typedef struct file_node{
 //   char * name;
 //   struct file_node * next;
 // } file_node;
 
-typedef struct tree{
+typedef struct tree {
   int data;
   struct tree *right;
   struct tree *left;
@@ -45,14 +47,21 @@ void swap(int *a, int *b);
 
 void swap_float(float *a, float *b);
 
+void croissant(int *tab, int taille, uint_fast8_t *swapped);
+
+void decroissant(int *tab, int taille, uint_fast8_t *swapped);
+
+void random_tab(int size);
+
 int check_args(char *arg);
 
 int *read_csv(int array_size);
 
-void run_test_verbose(int *tab, int taille, TriFunction tri_func);
+void run_test_verbose(int *tab, int taille, SortFunction tri_func);
 
-void run_test(int *tab, int taille, TriFunction tri_func);
+void run_test(int *tab, int taille, SortFunction tri_func);
 
+void run_test_merge(int *tab, int taille, int debut, int fin, MergeFunction tri_func);
 
 /*********************************************
  *            --- FILE_NODE ---
