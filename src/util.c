@@ -87,7 +87,7 @@ void decroissant(int *tab, int taille, uint_fast8_t *swapped) {
 void random_tab(int size) {
   FILE * fp = fopen("arrays/array.csv", "w");
   for (int i = 0; i < size; i++) {
-    fprintf(fp, "%d,", rand() % 400);
+    fprintf(fp, "%d,", rand() % 10000);
   }
   fclose(fp);
 }
@@ -160,14 +160,12 @@ void run_test(int *tab, int taille, SortFunction tri_func) {
 void run_test_merge(int *tab, int taille, int debut, int fin, MergeFunction tri_func) {
 
   printf("- Tableau trié? %d, (Taille: %d)\n", is_sorted(tab, taille), taille);
-  affichage_tableau(tab, taille);
 
   clock_t debut_temps = clock();
   tri_func(tab, debut, fin);
   clock_t fin_temps = clock();
 
   printf("- Tableau trié? %d\n", is_sorted(tab, taille));
-  affichage_tableau(tab, taille);
 
   double temps = (double)(fin_temps - debut_temps) / CLOCKS_PER_SEC;
   printf("Temps d'exécution : %f secondes\n", temps);

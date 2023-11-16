@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     run_test_merge(array, array_size, 0, array_size-1, function);
   }
   else{
-    run_test_verbose(array, array_size, function);
+    run_test(array, array_size, function);
   }
 
   free(array);
