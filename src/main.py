@@ -3,6 +3,9 @@ import fnmatch
 import re
 import subprocess
 
+array_size = "15000"
+nb_calls = 20
+
 def search_algorithms():
     folder = 'lib'
     extension = '.so'
@@ -24,20 +27,27 @@ if not files:
 # Liste pour stocker les temps d'exécution
 temps_execution = []
 
-# Exécute le programme C dix fois
-for _ in range(10):
-    sortie = subprocess.check_output("bin/main bubble_sort 2000", shell=True)
+for i in range (len(files)):
+    for _ in range(nb_calls):
+        cmd = ["bin/main", files[i], str(array_size)]
+        sortie = subprocess.check_output(cmd, shell=False)
+        temps_match = re.search(r"Temps d'exécution : (\d+\.\d+) secondes", sortie.decode("utf-8"))
+        if temps_match:
+            temps_execution.append(float(temps_match.group(1)))
+        else:
+            print("Erreur : impossible de trouver le temps d'éxécution dans la sortie.")
 
-    # Utilise une expression régulière pour extraire le temps d'exécution de la dernière ligne
-    temps_match = re.search(r"Temps d'exécution: (\d+\.\d+) secondes", sortie.decode("utf-8"))
+        avg = 0.0
+        for j in temps_execution:
+            avg += j
+        
+    avg = avg/len(temps_execution)
+    print("Average "+ files[i] + ": " f"{avg} secs")
 
-    # Vérifie si la correspondance a été trouvée
-    if temps_match:
-        temps_execution.append(float(temps_match.group(1)))
-    else:
-        print("Erreur : impossible de trouver le temps d'éxécution dans la sortie.")
 
 # Affiche les temps d'exécution
-print("Temps d'éxécution pour chaque appel :")
-for temps in temps_execution:
-    print(f"{temps} secondes")
+# print("Temps d'éxécution pour chaque appel :")
+# for temps in temps_execution:
+#     print(f"{temps} secondes")
+
+

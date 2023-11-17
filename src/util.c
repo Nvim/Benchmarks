@@ -25,14 +25,6 @@ int *creation_tableau(int taille) {
   return tab;
 }
 
-// remplit un tableau de valeurs croissantes
-int *fill_tab_asc(int *tab, int taille) {
-  for (int i = 0; i < taille; i++) {
-    tab[i] = i;
-  }
-  return tab;
-}
-
 // remplit un tableau de valeurs aléatoires
 void initialisation_aleatoire(int *tab, int taille, int min, int max) {
   for (int i = 0; i < taille; i++) {
@@ -40,48 +32,10 @@ void initialisation_aleatoire(int *tab, int taille, int min, int max) {
   }
 }
 
-void copie_tableau(int *source, int *destination, int taille) {
-  for (int i = 0; i < taille; i++) {
-    destination[i] = source[i];
-  }
-}
-
 void swap(int *a, int *b) {
   int temp = *a;
   *a = *b;
   *b = temp;
-}
-
-void swap_float(float *a, float *b) {
-  float temp = *a;
-  *a = *b;
-  *b = temp;
-}
-
-// Fonction pour effectuer un passage dans le sens croissant
-void croissant(int *tab, int taille, uint_fast8_t *swapped) {
-  *swapped = 0; // Initialiser la variable swapped à 0
-
-  for (int i = 0; i < taille - 1; i++) {
-    if (tab[i] > tab[i + 1]) {
-      // Échanger les éléments
-      swap(&tab[i], &tab[i + 1]);
-      *swapped = 1;
-    }
-  }
-}
-
-// Fonction pour effectuer un passage dans le sens décroissant
-void decroissant(int *tab, int taille, uint_fast8_t *swapped) {
-  *swapped = 0; // Initialiser la variable swapped à 0
-
-  for (int i = taille - 1; i > 0; i--) {
-    if (tab[i] > tab[i - 1]) {
-      // Échanger les éléments
-      swap(&tab[i], &tab[i - 1]);
-      *swapped = 1;
-    }
-  }
 }
 
 void random_tab(int size) {
