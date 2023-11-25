@@ -47,7 +47,7 @@ void random_tab(int size) {
 }
 
 int *read_csv(int array_size) {
-  FILE *fp = fopen("arrays/array.csv", "r");
+  FILE *fp = fopen("arrays/test.csv", "r");
 
   if (fp == NULL) {
     fprintf(stderr, "*** Erreur lors de l'ouverture du fichier");

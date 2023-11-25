@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
   printf("\nArray Size: %d", array_size);
-  random_tab(array_size);
 
   int * array = read_csv(array_size);
   printf("\nLecture tableau réussie\n");

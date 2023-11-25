@@ -1,10 +1,15 @@
+from resoursces import *
+
 import os
 import fnmatch
 import re
 import subprocess
 
-array_size = "15000"
+from resoursces.random_values import random_values
+
 nb_calls = 20
+array_size = "15000"
+array_dir = "arrays"
 
 def search_algorithms():
     folder = 'lib'
@@ -23,6 +28,7 @@ files = search_algorithms()
 if not files:
     print("Erreur: Aucun algorithme de tri trouvé")
 
+random_values(array_size, array_dir)
 
 # Liste pour stocker les temps d'exécution
 temps_execution = []
@@ -43,11 +49,4 @@ for i in range (len(files)):
         
     avg = avg/len(temps_execution)
     print("Average "+ files[i] + ": " f"{avg} secs")
-
-
-# Affiche les temps d'exécution
-# print("Temps d'éxécution pour chaque appel :")
-# for temps in temps_execution:
-#     print(f"{temps} secondes")
-
 
