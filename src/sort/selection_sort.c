@@ -1,6 +1,6 @@
 #include "../../include/lib.h"
 
-void simple_sort(int * tab, int taille){
+void simple_sort(int *tab, int taille) {
   int i, j, min_index;
   for (i = 0; i < taille - 1; i++) {
     // Trouver l'indice du minimum dans la partie non triée
@@ -11,6 +11,8 @@ void simple_sort(int * tab, int taille){
       }
     }
     // Échanger l'élément minimum avec l'élément à la position i
-    swap(&tab[i], &tab[min_index]);
+    if (min_index != i) {
+      swap(&tab[i], &tab[min_index]);
+    }
   }
 }
