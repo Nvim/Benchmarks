@@ -6,10 +6,11 @@
 
 # --------------------------------------------- VARIABLES -------------------------------------------
 
+project_path := $(CURDIR)
+
 CC=gcc
 FLAGS=-O3
-LINK_FLAGS=/home/naim/Code/L3/Sort/lib/*.so
-# LINK_FLAGS=/home/naim/Code/projects/Sort/lib/*.so
+LINK_FLAGS=$(project_path)/lib/*.so
 SRC=src
 OBJ=obj
 LIB=lib
