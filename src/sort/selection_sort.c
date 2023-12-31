@@ -1,6 +1,6 @@
 #include "../../include/lib.h"
 
-void simple_sort(int *tab, int taille) {
+void selection_sort(int *tab, int taille) {
   int i, j, min_index;
   for (i = 0; i < taille - 1; i++) {
     // Trouver l'indice du minimum dans la partie non triée
