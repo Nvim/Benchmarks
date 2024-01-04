@@ -2,3 +2,6 @@ obj/
 bin/
 lib/
 arrays/
+src/python/__pycache__/
+*.pyc
+*.pyo
