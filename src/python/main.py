@@ -3,8 +3,7 @@ import os
 import re
 import subprocess
 
-import random_big_values
-import random_small_values
+import array_gen
 
 nb_calls = 20
 array_size = 15000
@@ -23,8 +22,8 @@ def search_algorithms():
     return files
 
 
-def benchmark(files, array_function):
-    array_function(array_size, array_dir)
+def benchmark(files, array_function, min, max):
+    array_function(array_size, array_dir, min, max)
     tmp_temps_execution = []
     for i in range(len(files)):
         for _ in range(nb_calls):
@@ -57,7 +56,7 @@ if not files:
 
 # Liste pour stocker les temps d'exécution
 temps_execution = []
-temps_execution = benchmark(files, random_small_values.random_small_values)
+temps_execution = benchmark(files, array_gen.random_uneven_values, -10000, 10000)
 
 for i in range(len(temps_execution)):
     print("Average " + files[i] + ": " f"{temps_execution[i]} secs.")
