@@ -2,14 +2,14 @@
 #include <dlfcn.h>
 #include <limits.h>
 #include <math.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <stdint.h>
 
 #define TAILLE 15
-#define MAX_LINE_LENGTH 32768
+#define MAX_LINE_LENGTH 65536
 typedef void (*SortFunction)(int *, int);
 typedef void (*MergeFunction)(int *, int, int);
 
@@ -61,7 +61,8 @@ void run_test_verbose(int *tab, int taille, SortFunction tri_func);
 
 void run_test(int *tab, int taille, SortFunction tri_func);
 
-void run_test_merge(int *tab, int taille, int debut, int fin, MergeFunction tri_func);
+void run_test_merge(int *tab, int taille, int debut, int fin,
+                    MergeFunction tri_func);
 
 /*********************************************
  *            --- FILE_NODE ---

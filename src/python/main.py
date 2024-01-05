@@ -4,10 +4,14 @@ import re
 import subprocess
 
 import array_gen
+import matplotlib.pyplot as plt
 
 nb_calls = 20
 array_size = 15000
 array_dir = "arrays"
+
+MAX_32_BIT = 2147483645
+MIN_32_BIT = -2147483645
 
 
 def search_algorithms():
@@ -22,8 +26,19 @@ def search_algorithms():
     return files
 
 
+def get_diagram(filename, title, xlabel, ylabel, xdata, ydata):
+    plt.bar(ydata, xdata, color="blue", width=0.7, bottom=0)
+    plt.xticks(rotation=45, ha="right")
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+
+    plt.savefig(filename)
+
+
+# retourne le temps d'éxécution moyen de chaque algo dans une liste
 def benchmark(files, array_function, min, max):
-    array_function(array_size, array_dir, min, max)
+    array_gen.write_csv(array_function(array_size, min, max), array_dir)
     tmp_temps_execution = []
     for i in range(len(files)):
         for _ in range(nb_calls):
@@ -48,15 +63,21 @@ def benchmark(files, array_function, min, max):
     return temps_execution
 
 
-# Début programme
+### Début Programme Principal ###
 files = search_algorithms()
 
 if not files:
     print("Erreur: Aucun algorithme de tri trouvé")
+    exit()
 
 # Liste pour stocker les temps d'exécution
 temps_execution = []
-temps_execution = benchmark(files, array_gen.random_uneven_values, -10000, 10000)
-
-for i in range(len(temps_execution)):
-    print("Average " + files[i] + ": " f"{temps_execution[i]} secs.")
+temps_execution = benchmark(files, array_gen.worst_case, 10, 10)
+get_diagram(
+    "prime.png",
+    "Pire cas possible",
+    "Algorithme",
+    "Temps moyen (ms)",
+    temps_execution,
+    files,
+)

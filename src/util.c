@@ -39,7 +39,7 @@ void swap(int *a, int *b) {
 }
 
 void random_tab(int size) {
-  FILE * fp = fopen("arrays/array.csv", "w");
+  FILE *fp = fopen("arrays/array.csv", "w");
   for (int i = 0; i < size; i++) {
     fprintf(fp, "%d,", rand() % 10000);
   }
@@ -60,8 +60,6 @@ int *read_csv(int array_size) {
   int i = 0;
 
   while (fgets(ligne, sizeof(ligne), fp)) {
-    // Utiliser strtok pour diviser la ligne en valeurs séparées par des
-    // virgules
     char *token = strtok(ligne, ",");
     while (token != NULL) {
       // Convertir le token en un entier
@@ -111,7 +109,8 @@ void run_test(int *tab, int taille, SortFunction tri_func) {
   printf("Temps d'exécution : %f secondes\n", temps);
 }
 
-void run_test_merge(int *tab, int taille, int debut, int fin, MergeFunction tri_func) {
+void run_test_merge(int *tab, int taille, int debut, int fin,
+                    MergeFunction tri_func) {
 
   printf("- Tableau trié? %d, (Taille: %d)\n", is_sorted(tab, taille), taille);
 
