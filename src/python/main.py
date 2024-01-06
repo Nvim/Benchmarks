@@ -7,7 +7,7 @@ import array_gen
 import matplotlib.pyplot as plt
 
 nb_calls = 20
-array_size = 15000
+array_size = 10000
 array_dir = "arrays"
 
 MAX_32_BIT = 2147483645
@@ -72,7 +72,7 @@ if not files:
 
 # Liste pour stocker les temps d'exécution
 temps_execution = []
-temps_execution = benchmark(files, array_gen.worst_case, 10, 10)
+temps_execution = benchmark(files, array_gen.random_values, -10000, 30000)
 get_diagram(
     "prime.png",
     "Pire cas possible",

@@ -14,6 +14,16 @@ Tree *new_tree(int value) {
   return tmp;
 }
 
+void free_tree(Tree *tree) {
+  if (tree == NULL) {
+    return;
+  }
+  free_tree(tree->left);
+  free_tree(tree->right);
+
+  free(tree);
+}
+
 // chaque élément de l'arbre est unique
 Tree *insert(Tree *tree, int value) {
   if (tree == NULL) {
@@ -46,5 +56,6 @@ int *tree_sort(int *tab, int taille) {
 
   int i = 0;
   store_sorted(root, tab, &i);
+  free(root);
   return tab;
 }
