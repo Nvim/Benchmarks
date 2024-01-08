@@ -14,16 +14,16 @@ def write_csv(values_arr, array_dir):
         csv_writer = csv.writer(csvfile)
         csv_writer.writerow(values_arr)
 
-    print(f"Le fichier CSV a été créé avec succès à l'emplacement : {csv_file_path}")
+    # print(f"Le fichier CSV a été créé avec succès à l'emplacement : {csv_file_path}")
 
 
-def random_values(array_size, min, max):
+def randoms(array_size, min, max):
     random_values = [random.randint(min, max) for _ in range(array_size)]
     return random_values
 
 
 # nombres pairs uniquement
-def random_even_values(array_size, min, max):
+def random_even(array_size, min, max):
     random_values = [
         random.randint(min // 2, (max // 2) + 1) * 2 for _ in range(array_size)
     ]
@@ -31,7 +31,7 @@ def random_even_values(array_size, min, max):
 
 
 # nombres impairs uniquement
-def random_uneven_values(array_size, min, max):
+def random_uneven(array_size, min, max):
     random_values = [
         random.randint(min // 2, (max // 2) + 1) * 2 + 1 for _ in range(array_size)
     ]
@@ -39,7 +39,7 @@ def random_uneven_values(array_size, min, max):
 
 
 # nombres premiers uniquement
-def random_prime_values(array_size, min, max):
+def random_prime(array_size, min, max):
     random_values = []
     while len(random_values) < array_size:
         candidate = random.randint(min, max)
@@ -55,6 +55,7 @@ def random_prime_values(array_size, min, max):
 # tableau trié dans le mauvais ordre
 def worst_case(array_size, min, max):
     random_values = []
-    for i in range(array_size, 0):
-        random_values[i] = i
+    random_values = sorted(
+        [random.randint(min, max) for _ in range(array_size)], reverse=True
+    )
     return random_values
