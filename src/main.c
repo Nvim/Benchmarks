@@ -38,7 +38,9 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (strcmp(function_name, "merge_sort") == 0) {
+  // Si la fonction est merge/quick sort, prototype différent
+  if (strcmp(function_name, "merge_sort") == 0 ||
+      strcmp(function_name, "quick_sort") == 0) {
     merge = 1;
     function = (MergeFunction *)dlsym(lib_handle, function_name);
   } else {
