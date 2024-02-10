@@ -33,6 +33,8 @@ Le projet est composé d'un programme C et d'un programme Python.
 ### Utilisation du projet
 
 ```
+make
+
 src/Python/main.py
 ```
 

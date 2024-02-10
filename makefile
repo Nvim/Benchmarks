@@ -52,6 +52,7 @@ $(LIB)/lib%.so: $(OBJ)/%.o
 #Création des fichiers objets à partir des fichiers.c du dossier ./src (compiling)
 #gcc -c src/%.c -O3 -o obj/%.o
 $(OBJ)/%.o: $(SRC)/%.c
+	mkdir -p obj bin lib
 	$(CC) -c $< $(FLAGS) -o $@	
 
 # ~1e COMMANDE:
